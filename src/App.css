@@ -1,0 +1,12 @@
+.fl{
+    display: flex;
+}
+.just-center{
+    justify-content: center;
+}
+.align-center{
+    align-items: center;
+}
+.h-full{
+    height: 100vh;
+}
