@@ -1,6 +1,6 @@
 import {Container} from "@/components/TabBar/style.tsx";
 import icon from "@/components/TabBar/icon";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 const TabBar = () => {
     const menuList = [
@@ -36,12 +36,23 @@ const TabBar = () => {
         },
     ]
     const [activeIndex, setActiveIndex] = useState(0)
+    const [left, setLeft] = useState('')
+    const menuRef = useRef(null);
     function handleChangeItem(index: number) {
         setActiveIndex(index)
     }
+    useEffect(() => {
+        if (menuRef.current){
+            const element = menuRef.current.querySelector('.active')
+            const menuBorder = menuRef.current.querySelector('.menu__border')
+            const offsetActiveItem = element.getBoundingClientRect();
+            const left = Math.floor(offsetActiveItem.left - menuRef.current.offsetLeft - (menuBorder.offsetWidth  - offsetActiveItem.width) / 2) +  "px";
+            setLeft(left)
+        }
+    }, [activeIndex])
     return (
-        <Container color={menuList[activeIndex].color}>
-            <menu className='menu'>
+        <Container color={menuList[activeIndex].color} left={left}>
+            <menu className='menu' ref={menuRef}>
                 {
                     menuList.map((e,index) => {
                         return (

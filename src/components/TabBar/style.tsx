@@ -1,18 +1,17 @@
 import styled from "styled-components";
-
 const bgColorMenu = '#1d1d27'
 const duration = '.7s'
 export const Container = styled.div`
     .menu {
         margin: 0;
         display: flex;
-        width: 100%;
         font-size: 1.5em;
         padding: 0 2.85em;
         position: relative;
         align-items: center;
         justify-content: center;
         background-color: ${bgColorMenu};
+      list-style-type: disc;
     }
 
     .menu__item {
@@ -92,7 +91,8 @@ export const Container = styled.div`
         position: absolute;
         clip-path: url(#menu);
         will-change: transform;
-        background-color: var(--bgColorMenu);
+        background-color: ${bgColorMenu};
+        transform: translate3d(${e => e.left}, 0, 0);
         transition: transform var(--timeOut , ${duration});
 
     }
