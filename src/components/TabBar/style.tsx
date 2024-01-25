@@ -1,7 +1,11 @@
 import styled from "styled-components";
 const bgColorMenu = '#1d1d27'
-const duration = '.7s'
-export const Container = styled.div`
+const duration = '0s'
+interface propsInterface {
+    left: string;
+    color: string;
+}
+export const Container = styled.div<propsInterface>`
     .menu {
         margin: 0;
         display: flex;
@@ -93,7 +97,7 @@ export const Container = styled.div`
         will-change: transform;
         background-color: ${bgColorMenu};
         transform: translate3d(${e => e.left}, 0, 0);
-        transition: transform var(--timeOut , ${duration});
+        transition: transform ${duration};
 
     }
 

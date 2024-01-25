@@ -1,64 +1,52 @@
 import {Container} from "@/components/TabBar/style.tsx";
 import icon from "@/components/TabBar/icon";
 import {useEffect, useRef, useState} from "react";
+import {setColor,setActiveIndex} from '@/store/tabSlice/index.tsx'
+import {useDispatch, useSelector} from "react-redux";
+import routerHook from '@/hooks/useRoute.tsx'
 
 const TabBar = () => {
-    const menuList = [
-        {
-            path: "首页",
-            id: 1,
-            color: '#ff8c00',
-            icon: icon.home
-        },
-        {
-            path: "动画",
-            id: 2,
-            color: '#f54888',
-            icon: icon.desk
-        },
-        {
-            path: "游戏",
-            id: 3,
-            color: '#4343f5',
-            icon: icon.home
-        },
-        {
-            path: "音乐",
-            id: 4,
-            color: '#e0b115',
-            icon: icon.music
-        },
-        {
-            path: "图片",
-            id: 5,
-            color: '#65ddb7',
-            icon: icon.imgpath
-        },
-    ]
-    const [activeIndex, setActiveIndex] = useState(0)
+    const activeIndex = useSelector(state => state.tab.activeIndex)
+    const dispatch = useDispatch();
+    const {navigate,locationHook} = routerHook();
+    const menuList = icon.menuList;
     const [left, setLeft] = useState('')
-    const menuRef = useRef(null);
+    const menuRef = useRef<HTMLElement | null>(null);
+
     function handleChangeItem(index: number) {
-        setActiveIndex(index)
+        dispatch(setActiveIndex(index))
+        dispatch(setColor(menuList[index].color))
+        navigate(menuList[index].path)
     }
+
     useEffect(() => {
-        if (menuRef.current){
-            const element = menuRef.current.querySelector('.active')
-            const menuBorder = menuRef.current.querySelector('.menu__border')
+        const patnName = locationHook.pathname;
+        if (patnName !== '/'){
+            let path = patnName.split('/')[1];
+            let resInex = icon.menuList.findIndex(item => item.path === path)
+            if (resInex !== -1){
+                handleChangeItem(resInex)
+            }
+        }
+    }, []);
+    useEffect(() => {
+        if (menuRef.current) {
+            const element = menuRef.current.querySelector('.active') as HTMLElement;
+            const menuBorder = menuRef.current.querySelector('.menu__border') as HTMLElement;
             const offsetActiveItem = element.getBoundingClientRect();
-            const left = Math.floor(offsetActiveItem.left - menuRef.current.offsetLeft - (menuBorder.offsetWidth  - offsetActiveItem.width) / 2) +  "px";
+            const left = Math.floor(offsetActiveItem.left - menuRef.current.offsetLeft - (menuBorder.offsetWidth - offsetActiveItem.width) / 2) + "px";
             setLeft(left)
         }
     }, [activeIndex])
     return (
-        <Container color={menuList[activeIndex].color} left={left}>
+        <Container color={menuList[activeIndex].color} left={left} >
             <menu className='menu' ref={menuRef}>
                 {
-                    menuList.map((e,index) => {
+                    menuList.map((e, index) => {
                         return (
                             <button
                                 onClick={() => handleChangeItem(index)}
-                                className={`menu__item ${ activeIndex === index ? 'active' : ''}`} key={e.id}>
+                                className={`menu__item ${activeIndex === index ? 'active' : ''}`} key={e.id}>
                                 {e.icon}
                             </button>
                         )
