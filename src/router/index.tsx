@@ -1,5 +1,5 @@
 import {lazy, LazyExoticComponent, Suspense} from "react";
-import {createBrowserRouter} from 'react-router-dom'
+import {createHashRouter} from 'react-router-dom'
 import {JSX} from "react/jsx-runtime";
 const Loading = lazy(() => import(`@/components/loading/index.tsx`));
 export function widthLazyLoad(components: string | LazyExoticComponent<() => JSX.Element>) {
@@ -22,7 +22,7 @@ const Cartton = widthLazyLoad(lazy(() => import(`@/pages/cartoon/index`)))
 const Fiction = widthLazyLoad(lazy(() => import(`@/pages/fiction/index.tsx`)))
 const Picture = widthLazyLoad(lazy(() => import(`@/pages/picture/index.tsx`)))
 const Tools = widthLazyLoad(lazy(() => import(`@/pages/tools/index.tsx`)))
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
         path: '/',
         element: <App/>,
