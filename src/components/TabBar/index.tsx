@@ -1,8 +1,11 @@
 import {Container} from "@/components/TabBar/style.tsx";
 import icon from "@/components/TabBar/icon";
 import {useEffect, useRef, useState} from "react";
+import {setColor} from '@/store/tabSlice/index.tsx'
+import {useDispatch} from "react-redux";
 
 const TabBar = () => {
+    const dispatch = useDispatch();
     const menuList = [
         {
             path: "首页",
@@ -37,16 +40,19 @@ const TabBar = () => {
     ]
     const [activeIndex, setActiveIndex] = useState(0)
     const [left, setLeft] = useState('')
-    const menuRef = useRef(null);
+    const menuRef = useRef<HTMLElement | null>(null);
+
     function handleChangeItem(index: number) {
         setActiveIndex(index)
+        dispatch(setColor(menuList[index].color))
     }
+
     useEffect(() => {
-        if (menuRef.current){
-            const element = menuRef.current.querySelector('.active')
-            const menuBorder = menuRef.current.querySelector('.menu__border')
+        if (menuRef.current) {
+            const element = menuRef.current.querySelector('.active') as HTMLElement;
+            const menuBorder = menuRef.current.querySelector('.menu__border') as HTMLElement;
             const offsetActiveItem = element.getBoundingClientRect();
-            const left = Math.floor(offsetActiveItem.left - menuRef.current.offsetLeft - (menuBorder.offsetWidth  - offsetActiveItem.width) / 2) +  "px";
+            const left = Math.floor(offsetActiveItem.left - menuRef.current.offsetLeft - (menuBorder.offsetWidth - offsetActiveItem.width) / 2) + "px";
             setLeft(left)
         }
     }, [activeIndex])
@@ -54,11 +60,11 @@ const TabBar = () => {
         <Container color={menuList[activeIndex].color} left={left}>
             <menu className='menu' ref={menuRef}>
                 {
-                    menuList.map((e,index) => {
+                    menuList.map((e, index) => {
                         return (
                             <button
                                 onClick={() => handleChangeItem(index)}
-                                className={`menu__item ${ activeIndex === index ? 'active' : ''}`} key={e.id}>
+                                className={`menu__item ${activeIndex === index ? 'active' : ''}`} key={e.id}>
                                 {e.icon}
                             </button>
                         )
