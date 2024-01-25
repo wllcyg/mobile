@@ -9,9 +9,12 @@ import {createSlice} from "@reduxjs/toolkit";
     reducers:{
         setColor(state,{payload}){
             state.bgColor=payload;
-        }
+        },
+        setActiveIndex(state,{payload}){
+            state.activeIndex=payload;
+        },
     },
 })
 
-export const { setColor } = tabSlice.actions;
+export const { setColor,setActiveIndex } = tabSlice.actions;
 export default tabSlice.reducer;

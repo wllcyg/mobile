@@ -1,6 +1,6 @@
 import styled from "styled-components";
 const bgColorMenu = '#1d1d27'
-const duration = '.7s'
+const duration = '0s'
 interface propsInterface {
     left: string;
     color: string;
