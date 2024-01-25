@@ -22,8 +22,8 @@ const TabBar = () => {
     useEffect(() => {
         const patnName = locationHook.pathname;
         if (patnName !== '/'){
-            let path = patnName.split('/')[1];
-            let resInex = icon.menuList.findIndex(item => item.path === path)
+            const path = patnName.split('/')[1];
+            const resInex = icon.menuList.findIndex(item => item.path === path)
             if (resInex !== -1){
                 handleChangeItem(resInex)
             }
