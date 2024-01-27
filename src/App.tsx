@@ -10,7 +10,7 @@ function App() {
     return (
     <AppWrapper colorbg={color}>
         <nav>
-            nav1
+
         </nav>
         <main>
             <Outlet/>
