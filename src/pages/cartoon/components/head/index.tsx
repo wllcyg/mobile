@@ -1,6 +1,5 @@
 
 import {baseProps} from "@/pages/cartoon/components/facialhair";
-
 const head_1 = (props: baseProps) => {
     return <>
         <g>
@@ -57,6 +56,9 @@ const head_4 = (props: baseProps) => {
 }
 export const HeadSlot = (props: baseProps) => {
     const ListData = [head_1, head_2, head_3, head_4]
+    if (!ListData[props.index]){
+        return ListData[0](props)
+    }
     return (
         <>
             {ListData[props.index](props)}

@@ -31,6 +31,9 @@ const glasses_4 = () => {
 }
 export const GlassesSlot = (props: baseProps) => {
     const ListData = [glasses_1, glasses_2, glasses_3, glasses_4]
+    if (!ListData[props.index]){
+        return <></>
+    }
     return (
         <>
             {ListData[props.index]()}

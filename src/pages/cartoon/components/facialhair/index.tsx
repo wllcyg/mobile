@@ -35,6 +35,9 @@ const faccialHair_4 = (props:baseProps) => {
 }
 export const FacialHairSlot = (props: baseProps) => {
     const ListData = [faccialHair_1, faccialHair_2, faccialHair_3, faccialHair_4]
+    if (!ListData[props.index]){
+        return <> </>
+    }
     return (
         <>
             {ListData[props.index](props)}

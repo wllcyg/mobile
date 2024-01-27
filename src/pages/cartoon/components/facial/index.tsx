@@ -1,5 +1,6 @@
 
 import {baseProps} from "@/pages/cartoon/components/facialhair";
+import {getIndex} from '@/pages/cartoon/components/body/index.tsx'
 const faccial_1 = () => {
     return <>
             <path fillRule="evenodd" clipRule="evenodd"
@@ -44,7 +45,7 @@ export const FacialSlot = (props: baseProps) => {
     const ListData = [faccial_1, faccial_2, faccial_3, faccial_4]
     return (
         <>
-            {ListData[props.index]()}
+            {getIndex(ListData,props.index,true)}
         </>
     );
 };
